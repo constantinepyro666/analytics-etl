@@ -7,7 +7,7 @@ conn = psycopg2.connect(
     dbname="etl",
     user="analyst",
     password="1234",
-    host="postgres",
+    host="172.17.0.1",
     port="5432"
 )
 

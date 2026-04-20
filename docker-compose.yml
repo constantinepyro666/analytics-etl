@@ -1,7 +1,6 @@
 version: '3'
 
 services:
-
   postgres:
     image: postgres:15
     environment:
@@ -10,16 +9,21 @@ services:
       POSTGRES_DB: etl
     ports:
       - "5433:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
 
-  airflow:
-    image: apache/airflow:2.9.0
+  dashboard:
+    image: python:3.11-slim
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: >
+      bash -c "pip install --no-cache-dir streamlit pandas psycopg2-binary &&
+               streamlit run dashboard/app.py --server.port 8502 --server.address 0.0.0.0"
+    ports:
+      - "8503:8503"
     depends_on:
       - postgres
-    environment:
-      - AIRFLOW__CORE__LOAD_EXAMPLES=False
-    volumes:
-      - ./dags:/opt/airflow/dags
-      - ./sql:/opt/airflow/sql
-    ports:
-      - "8080:8080"
-    command: standalone
+
+volumes:
+  pg_data:

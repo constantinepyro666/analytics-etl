@@ -1,8 +1,20 @@
 version: '3.8'
 
 services:
+  postgres:
+    image: postgres:15
+    container_name: analytics-db
+    environment:
+      POSTGRES_USER: analyst
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: etl
+    ports:
+      - "5433:5432"
+
   dashboard:
     build: .
     container_name: analytics-etl-dashboard
+    depends_on:
+      - postgres
     ports:
       - "8503:8503"

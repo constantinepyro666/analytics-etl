@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: analyst
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: etl
+    ports:
+      - "5433:5432"
+
+  airflow:
+    image: apache/airflow:2.9.0
+    depends_on:
+      - postgres
+    environment:
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./sql:/opt/airflow/sql
+    ports:
+      - "8080:8080"
+    command: standalone

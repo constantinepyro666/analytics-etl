@@ -10,4 +10,4 @@ services:
       bash -c "pip install --no-cache-dir streamlit pandas psycopg2-binary &&
                streamlit run dashboard/app.py --server.port 8502 --server.address 0.0.0.0"
     ports:
-      - "8503:8503"
+      - "8503:8502"

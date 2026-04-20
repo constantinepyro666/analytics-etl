@@ -1,13 +1,12 @@
-version: '3'
+version: '3.8'
 
 services:
   dashboard:
     image: python:3.11-slim
+    container_name: analytics-etl-dashboard
     working_dir: /app
     volumes:
       - .:/app
-    command: >
-      bash -c "pip install --no-cache-dir streamlit pandas psycopg2-binary &&
-               streamlit run dashboard/app.py --server.port 8502 --server.address 0.0.0.0"
+    command: streamlit run dashboard/app.py --server.port 8503 --server.address 0.0.0.0
     ports:
-      - "8503:8502"
+      - "8503:8503"

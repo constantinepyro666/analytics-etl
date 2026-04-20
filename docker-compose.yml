@@ -1,17 +1,6 @@
 version: '3'
 
 services:
-  postgres:
-    image: postgres:15
-    environment:
-      POSTGRES_USER: analyst
-      POSTGRES_PASSWORD: 1234
-      POSTGRES_DB: etl
-    ports:
-      - "5433:5432"
-    volumes:
-      - pg_data:/var/lib/postgresql/data
-
   dashboard:
     image: python:3.11-slim
     working_dir: /app
@@ -22,8 +11,3 @@ services:
                streamlit run dashboard/app.py --server.port 8502 --server.address 0.0.0.0"
     ports:
       - "8503:8503"
-    depends_on:
-      - postgres
-
-volumes:
-  pg_data:

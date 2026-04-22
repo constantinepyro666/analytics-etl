@@ -1,28 +1,12 @@
-version: "3.8"
-
 services:
-  postgres:
-    image: postgres:15
-    container_name: analytics-db
-    environment:
-      POSTGRES_HOST_AUTH_METHOD: trust
-      POSTGRES_USER: analyst
-      POSTGRES_PASSWORD: 1234
-      POSTGRES_DB: etl
-    ports:
-      - "5433:5432"
-    volumes:
-      - pg_data:/var/lib/postgresql/data
-    command: >
-     postgres -c listen_addresses='*'
-  
   dashboard:
     build: .
-    container_name: analytics-dashboard
-    depends_on:
-      - postgres
+    container_name: etl-dashboard
     ports:
       - "8503:8503"
-
-volumes:
-  pg_data:
+    environment:
+      DB_HOST: 172.17.0.1
+      DB_PORT: 5433
+      DB_NAME: etl
+      DB_USER: analyst
+      DB_PASSWORD: 1234

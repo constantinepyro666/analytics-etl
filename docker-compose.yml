@@ -5,6 +5,7 @@ services:
     image: postgres:15
     container_name: analytics-db
     environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
       POSTGRES_USER: analyst
       POSTGRES_PASSWORD: 1234
       POSTGRES_DB: etl
@@ -12,7 +13,9 @@ services:
       - "5433:5432"
     volumes:
       - pg_data:/var/lib/postgresql/data
-
+    command: >
+     postgres -c listen_addresses='*'
+  
   dashboard:
     build: .
     container_name: analytics-dashboard

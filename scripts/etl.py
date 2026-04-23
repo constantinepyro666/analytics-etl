@@ -11,7 +11,7 @@ conn = psycopg2.connect(
     port="5432"
 )
 
-run_sql("sql/init.sql")
+#run_sql("sql/init.sql")
 
 cur = conn.cursor()
 

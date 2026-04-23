@@ -20,6 +20,9 @@ services:
       - postgres
     ports:
       - "8503:8503"
+    volumes:
+      - .:/app   # 🔥 ВОТ ЭТО КЛЮЧЕВОЕ
+    command: streamlit run dashboard/app.py --server.port=8503 --server.address=0.0.0.0
 
 volumes:
   pg_data:

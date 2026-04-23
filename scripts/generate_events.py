@@ -36,10 +36,11 @@ for _ in range(EVENTS_PER_RUN):
     platform = random.choice(platforms)
 
     # распределяем события по дням
-    days_ago = random.randint(0, DAYS_BACK)
-    minutes_ago = random.randint(0, 1440)
-
-    event_time = now - timedelta(days=days_ago, minutes=minutes_ago)
+event_time = datetime.now() - timedelta(
+    days=random.randint(0, DAYS_BACK),
+    hours=random.randint(0, 23),
+    minutes=random.randint(0, 59)
+)
 
     cur.execute("""
         INSERT INTO raw_events (user_id, event_type, event_time, platform)

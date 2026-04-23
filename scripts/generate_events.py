@@ -12,22 +12,42 @@ conn = psycopg2.connect(
 
 cur = conn.cursor()
 
+# --- настройки ---
+NUM_USERS = 200
+DAYS_BACK = 7
+EVENTS_PER_RUN = 3000
+
 platforms = ["iOS", "Android", "Web"]
-events = ["signup", "view_item", "purchase"]
 
 now = datetime.now()
 
-for _ in range(100):
-    user_id = random.randint(1, 100)
-    event = random.choice(events)
+# фиксированный пул пользователей (для retention)
+users = list(range(1, NUM_USERS + 1))
+
+for _ in range(EVENTS_PER_RUN):
+    user_id = random.choice(users)
+
+    # распределение событий (похоже на реальность)
+    event_type = random.choices(
+        ["signup", "view_item", "purchase"],
+        weights=[0.2, 0.6, 0.2]
+    )[0]
+
     platform = random.choice(platforms)
-    event_time = now - timedelta(minutes=random.randint(0, 60))
+
+    # распределяем события по дням
+    days_ago = random.randint(0, DAYS_BACK)
+    minutes_ago = random.randint(0, 1440)
+
+    event_time = now - timedelta(days=days_ago, minutes=minutes_ago)
 
     cur.execute("""
         INSERT INTO raw_events (user_id, event_type, event_time, platform)
         VALUES (%s, %s, %s, %s)
-    """, (user_id, event, event_time, platform))
+    """, (user_id, event_type, event_time, platform))
 
 conn.commit()
 cur.close()
 conn.close()
+
+print("✅ Events generated")

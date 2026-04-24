@@ -3,6 +3,7 @@ version: "3.8"
 services:
   postgres:
     image: postgres:15
+    restart: always
     environment:
       POSTGRES_HOST_AUTH_METHOD: trust
       POSTGRES_USER: analyst

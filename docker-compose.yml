@@ -33,6 +33,8 @@ services:
     restart: always
     depends_on:
       - postgres
+    volumes:
+      - .:/app
 
 volumes:
   pg_data:

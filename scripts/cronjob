@@ -1,1 +1,2 @@
-*/2 * * * * python /app/scripts/generate_events.py && python /app/scripts/etl.py >> /var/log/cron.log 2>&1
+*/2 * * * * /usr/local/bin/python /app/scripts/generate_events.py >> /var/log/cron.log 2>&1
+*/2 * * * * /usr/local/bin/python /app/scripts/etl.py >> /var/log/cron.log 2>&1

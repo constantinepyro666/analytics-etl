@@ -26,5 +26,13 @@ services:
       - .:/app   # 🔥 ВОТ ЭТО КЛЮЧЕВОЕ
     command: streamlit run dashboard/app.py --server.port=8503 --server.address=0.0.0.0
 
+  etl:
+    build:
+      context: .
+      dockerfile: Dockerfile.etl
+    restart: always
+    depends_on:
+      - postgres
+
 volumes:
   pg_data:

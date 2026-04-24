@@ -1,0 +1,24 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY . .
+
+RUN pip install -r requirements.txt
+
+# ставим cron
+RUN apt-get update && apt-get install -y cron
+
+# копируем cron-задачу
+COPY scripts/cronjob /etc/cron.d/etl-cron
+
+# даём права
+RUN chmod 0644 /etc/cron.d/etl-cron
+
+# регистрируем cron
+RUN crontab /etc/cron.d/etl-cron
+
+# создаём лог
+RUN touch /var/log/cron.log
+
+CMD ["cron", "-f"]

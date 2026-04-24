@@ -16,6 +16,7 @@ services:
 
   dashboard:
     build: .
+    restart: always
     depends_on:
       - postgres
     ports:

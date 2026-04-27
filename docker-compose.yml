@@ -13,6 +13,7 @@ services:
       - "5433:5432"
     volumes:
       - pg_data:/var/lib/postgresql/data
+      - .:/app   # чтобы видел sql
     command: postgres -c listen_addresses='*'
 
   dashboard:

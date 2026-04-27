@@ -1,6 +1,7 @@
 import psycopg2
 import os
 from datetime import datetime
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # --- настройки подключения ---
 conn = psycopg2.connect(

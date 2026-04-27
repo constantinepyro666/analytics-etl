@@ -47,7 +47,7 @@ print(f"[{datetime.now()}] 🧹 Cleaning old data")
 
 cur.execute("""
 DELETE FROM raw_events
-WHERE event_time < NOW() - INTERVAL '1 day';
+WHERE event_time < NOW() - INTERVAL '2 days';
 """)
 
 conn.commit()

@@ -1,22 +1,21 @@
 import psycopg2
 import os
 from datetime import datetime
+
+# 🔥 ОБЯЗАТЕЛЬНО СЮДА (глобально)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# --- настройки подключения ---
+# --- подключение ---
 conn = psycopg2.connect(
     dbname="etl",
     user="analyst",
     password="1234",
-    host="postgres",  # в docker будет postgres, локально можно localhost
+    host="postgres",
     port="5432"
 )
 
-#run_sql("sql/init.sql")
-
 cur = conn.cursor()
 
-# --- порядок выполнения SQL ---
 sql_files = [
     "sql/clean_events.sql",
     "sql/sessions.sql",
@@ -45,7 +44,7 @@ for file in sql_files:
         print(f"[{datetime.now()}] ❌ Error in {file}: {e}")
         conn.rollback()
 
-# 🔥 ВОТ СЮДА ДОБАВЛЯЕШЬ
+# очистка
 print(f"[{datetime.now()}] 🧹 Cleaning old data")
 
 cur.execute("""

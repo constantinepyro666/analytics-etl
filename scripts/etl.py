@@ -28,9 +28,11 @@ print(f"[{datetime.now()}] 🚀 ETL started")
 
 for file in sql_files:
     try:
-        print(f"[{datetime.now()}] ▶ Running {file}")
+        file_path = os.path.join(BASE_DIR, file)
 
-        with open(file, "r") as f:
+        print(f"[{datetime.now()}] ▶ Running {file_path}")
+
+        with open(file_path, "r") as f:
             sql = f.read()
 
         cur.execute(sql)

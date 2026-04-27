@@ -52,7 +52,12 @@ st.dataframe(funnel_df)
 # =========================
 st.header("Data Preview")
 
-preview_df = pd.read_sql("SELECT * FROM sessions LIMIT 100", conn)
+preview_df = pd.read_sql("""
+SELECT *
+FROM sessions
+ORDER BY event_time DESC
+LIMIT 100
+""", conn)
 
 st.dataframe(preview_df)
 

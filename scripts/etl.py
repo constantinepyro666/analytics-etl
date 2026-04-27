@@ -42,6 +42,16 @@ for file in sql_files:
         print(f"[{datetime.now()}] ❌ Error in {file}: {e}")
         conn.rollback()
 
+# 🔥 ВОТ СЮДА ДОБАВЛЯЕШЬ
+print(f"[{datetime.now()}] 🧹 Cleaning old data")
+
+cur.execute("""
+DELETE FROM raw_events
+WHERE event_time < NOW() - INTERVAL '1 day';
+""")
+
+conn.commit()
+
 cur.close()
 conn.close()
 

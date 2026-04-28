@@ -5,6 +5,6 @@ SELECT
     DATE(event_time) AS date,
     platform,
     COUNT(DISTINCT user_id) AS dau
-FROM sessions
+FROM raw_events
 GROUP BY date, platform
 ORDER BY date, platform;
